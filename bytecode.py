@@ -60,6 +60,28 @@ class Div(BytecodeBase):
         b = machine.pop()
         machine.push(a/b)
 
+
 class Terminate(BytecodeBase):
     def execute(self, machine):
         machine.executing = False
+
+class Jump(BytecodeBase):
+    def __init__(self, jump_to):
+        self.autoincrement = False
+        self.jump_to = jump_to
+
+    def execute(self, machine):
+        machine.pc = self.jump_to
+
+class ConditionalJump(BytecodeBase):
+    def __init__(self, value, jump_to):
+        self.value = value
+        self.jump_to = jump_to
+
+    def execute(self, machine):
+        val = machine.pop()
+        machine.push(val)
+        if val == self.value:
+            self.autoincrement = False
+            machine.pc = self.jump_to
+
