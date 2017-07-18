@@ -85,3 +85,8 @@ class ConditionalJump(BytecodeBase):
             self.autoincrement = False
             machine.pc = self.jump_to
 
+class Print(BytecodeBase):
+    def execute(self, machine):
+        val = machine.pop()
+        machine.push(val)
+        print(val)
