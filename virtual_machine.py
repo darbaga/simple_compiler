@@ -24,7 +24,8 @@ class VirtualMachine:
 
     def run(self):
         while self.executing:
+            increment = self.bytecodes[self.pc].autoincrement
             self.bytecodes[self.pc].execute(self)
-            if self.bytecodes[self.pc].autoincrement:
+            if increment:
                 self.pc += 1
 
