@@ -21,24 +21,24 @@ class Pop(BytecodeBase):
 
 class Add(BytecodeBase):
     def execute(self, machine):
-        a = Pop().execute(machine)
-        b = Pop().execute(machine)
+        a = machine.pop()
+        b = machine.pop()
         machine.push(a+b)
 
 class Sub(BytecodeBase):
     def execute(self, machine):
-        a = Pop().execute(machine)
-        b = Pop().execute(machine)
+        a = machine.pop()
+        b = machine.pop()
         machine.push(a-b)
 
 class Mul(BytecodeBase):
     def execute(self, machine):
-        a = Pop().execute(machine)
-        b = Pop().execute(machine)
+        a = machine.pop()
+        b = machine.pop()
         machine.push(a*b)
 
 class Div(BytecodeBase):
     def execute(self, machine):
-        a = Pop().execute(machine)
-        b = Pop().execute(machine)
+        a = machine.pop()
+        b = machine.pop()
         machine.push(a/b)
