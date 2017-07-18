@@ -42,3 +42,7 @@ class Div(BytecodeBase):
         a = machine.pop()
         b = machine.pop()
         machine.push(a/b)
+
+class Terminate(BytecodeBase):
+    def execute(self, machine):
+        machine.executing = False
