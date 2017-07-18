@@ -27,7 +27,3 @@ class VirtualMachine:
         """Write to memory.  Crash if index is out of bounds."""
         self.data[index] = value
 
-
-class BytecodeBase:
-    def execute(self, machine):
-        pass
