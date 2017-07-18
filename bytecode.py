@@ -40,25 +40,25 @@ class Add(BytecodeBase):
     def execute(self, machine):
         a = machine.pop()
         b = machine.pop()
-        machine.push(a+b)
+        machine.push(b+a)
 
 class Sub(BytecodeBase):
     def execute(self, machine):
         a = machine.pop()
         b = machine.pop()
-        machine.push(a-b)
+        machine.push(b-a)
 
 class Mul(BytecodeBase):
     def execute(self, machine):
         a = machine.pop()
         b = machine.pop()
-        machine.push(a*b)
+        machine.push(b*a)
 
 class Div(BytecodeBase):
     def execute(self, machine):
         a = machine.pop()
         b = machine.pop()
-        machine.push(a/b)
+        machine.push(b/a)
 
 
 class Terminate(BytecodeBase):
