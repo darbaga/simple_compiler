@@ -21,6 +21,21 @@ class Pop(BytecodeBase):
     def execute(self, machine):
         return machine.pop()
 
+class ReadMemory(BytecodeBase):
+    def __init__(self, index):
+        self.index = index
+
+    def execute(self, machine):
+        return machine.read_memory(self.index)
+
+class WriteMemory(BytecodeBase):
+    def __init__(self, index, value):
+        self.index, self.value = index, value
+
+    def execute(self, machine):
+        machine.write_memory(self.index, self.value)
+
+
 class Add(BytecodeBase):
     def execute(self, machine):
         a = machine.pop()
