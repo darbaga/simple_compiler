@@ -26,7 +26,7 @@ class ReadMemory(BytecodeBase):
         self.index = index
 
     def execute(self, machine):
-        return machine.read_memory(self.index)
+        machine.push(machine.read_memory(self.index))
 
 class WriteMemory(BytecodeBase):
     def __init__(self, index, value):
@@ -90,3 +90,12 @@ class Print(BytecodeBase):
         val = machine.pop()
         machine.push(val)
         print(val)
+
+class WriteTop(BytecodeBase):
+    def __init__(self, index):
+        # We need this because we can't layer bytecodes
+        # WriteMemory(Pop()) Fails because only WriteMemory gets executed
+        self.index = index
+
+    def execute(self, machine):
+        machine.write_memory(self.index, machine.pop())
