@@ -1,4 +1,6 @@
 class BytecodeBase:
+    autoincrement = True # For jump
+    
     def __init__(self):
         # Eventually might want to add subclassed bytecodes here
         # Though __subclasses__ works quite well
