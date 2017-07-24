@@ -82,8 +82,7 @@ class ConditionalJump(BytecodeBase):
     num_args = 2
     def __init__(self, value, jump_to):
         self.autoincrement = False
-        self.value = value
-        self.jump_to = jump_to
+        self.value, self.jump_to = value, jump_to
 
     def execute(self, machine):
         val = machine.pop()
