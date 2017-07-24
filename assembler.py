@@ -32,5 +32,5 @@ def assemble(string):
             raise Exception('Too many arguments')
         else:
             bytecodes.append(instruction(*args))
-    f=VirtualMachine(bytecodes)
-    f.run()
+    f=VirtualMachine()
+    f.run(bytecodes)

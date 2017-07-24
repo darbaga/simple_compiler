@@ -1,6 +1,5 @@
 class VirtualMachine:
-    def __init__(self, bytecodes, ram_size=256, executing=True):
-        self.bytecodes = bytecodes
+    def __init__(self, ram_size=256, executing=True):
         self.data = [None]*ram_size
         self.stack = []
         self.executing = executing
@@ -22,7 +21,8 @@ class VirtualMachine:
         """Write to memory.  Crash if index is out of bounds."""
         self.data[index] = value
 
-    def run(self):
+    def run(self, bytecodes):
+        self.bytecodes = bytecodes
         while self.executing:
             increment = self.bytecodes[self.pc].autoincrement
             self.bytecodes[self.pc].execute(self)
