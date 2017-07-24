@@ -1,5 +1,6 @@
 class BytecodeBase:
     autoincrement = True # For jump
+    num_args = 0 # for error checking
     
     def __init__(self):
         # Eventually might want to add subclassed bytecodes here
@@ -11,6 +12,7 @@ class BytecodeBase:
 
 
 class Push(BytecodeBase):
+    num_args = 1
     def __init__(self, data):
         self.data = data
 
@@ -22,6 +24,7 @@ class Pop(BytecodeBase):
         return machine.pop()
 
 class ReadMemory(BytecodeBase):
+    num_args = 1
     def __init__(self, index):
         self.index = index
 
@@ -29,6 +32,7 @@ class ReadMemory(BytecodeBase):
         machine.push(machine.read_memory(self.index))
 
 class WriteMemory(BytecodeBase):
+    num_args = 2
     def __init__(self, index, value):
         self.index, self.value = index, value
 
@@ -66,6 +70,7 @@ class Terminate(BytecodeBase):
         machine.executing = False
 
 class Jump(BytecodeBase):
+    num_args = 1
     def __init__(self, jump_to):
         self.autoincrement = False
         self.jump_to = jump_to
@@ -74,6 +79,7 @@ class Jump(BytecodeBase):
         machine.pc = self.jump_to
 
 class ConditionalJump(BytecodeBase):
+    num_args = 2
     def __init__(self, value, jump_to):
         self.autoincrement = False
         self.value = value
@@ -95,6 +101,7 @@ class Print(BytecodeBase):
         print(val)
 
 class WriteTop(BytecodeBase):
+    num_args = 1
     def __init__(self, index):
         # We need this because we can't layer bytecodes
         # WriteMemory(Pop()) Fails because only WriteMemory gets executed
