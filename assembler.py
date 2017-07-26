@@ -1,4 +1,5 @@
 from virtual_machine import VirtualMachine
+from virtual_devices import Input, Output
 from bytecode import *
 
 bytecode_table = {
@@ -33,4 +34,6 @@ def assemble(string):
         else:
             bytecodes.append(instruction(*args))
     f=VirtualMachine()
+    f.register_device(Input(), 1)
+    f.register_device(Output(), 1)
     f.run(bytecodes)
