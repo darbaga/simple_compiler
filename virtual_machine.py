@@ -46,3 +46,15 @@ class VirtualMachine:
             if increment:
                 self.pc += 1
 
+
+class DeviceProxy:
+    """Manages address translation between devices"""
+    def __init__(self, device, pos):
+        self.device = device
+        self.pos = pos
+
+    def read(self, index):
+        return self.device.read(self.pos-index)
+
+    def write(self, index, value):
+        self.device.write(self.pos-index, value)
