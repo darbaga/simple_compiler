@@ -1,9 +1,10 @@
 class VirtualMachine:
-    def __init__(self, ram_size=256, executing=True):
-        self.data = [None]*ram_size
+    def __init__(self, ram_size=512, executing=True):
+        self.data = {i: None for i in range(ram_size)}
         self.stack = []
         self.executing = executing
         self.pc = 0
+        self.devices_start = 256
 
     def push(self, value):
         """Push something onto the stack."""
@@ -15,11 +16,27 @@ class VirtualMachine:
 
     def read_memory(self, index):
         """Read from memory, crashing if index is out of bounds."""
-        return self.data[index]
+        if isinstance(self.data[index], DeviceProxy):
+            return self.data[index].read(index)
+        else:
+            return self.data[index]
 
     def write_memory(self, index, value):
         """Write to memory.  Crash if index is out of bounds."""
-        self.data[index] = value
+        if isinstance(self.data[index], DeviceProxy):
+            self.data[index].write(index, value)
+        else:
+            self.data[index] = value
+
+    def register_device(self, device, needed_addresses):
+        """Given an instantiated device and the number of required addresses, registers it in memory"""
+        # If not enough addresses, just error out
+        if self.devices_start+needed_addresses > len(self.data):
+            raise Exception('Not enough addresses to allocate')
+        proxyed_device = DeviceProxy(device, self.devices_start)
+        for i in range(self.devices_start, self.devices_start+needed_addresses):
+            self.data[i] = proxyed_device
+        self.devices_start += needed_addresses
 
     def run(self, bytecodes):
         self.bytecodes = bytecodes
